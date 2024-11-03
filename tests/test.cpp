@@ -25,10 +25,11 @@ TEST(Map_test, iterator) {
   map.insert({4, 5});
   map.insert({2, 3});
   map.insert({3, 1});
-  map.insert({3, 5});
-  // auto it = map.begin();
-  // auto it = map.end();
-  EXPECT_EQ(map.size(), 4);
+  map.insert({5, 7});
+
+  auto it = map.begin();
+  EXPECT_EQ(it->first, 4);
+  EXPECT_EQ(it->second, 5);
 }
 
 int main(int argc, char* argv[]) {

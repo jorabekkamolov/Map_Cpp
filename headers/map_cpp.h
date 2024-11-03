@@ -14,18 +14,13 @@ class Map {
   using key_type = Key;
   using pair = std::pair<key_type, value_type>;
   struct Node {
-    key_type key;
-    value_type value;
+    pair data;
     Node* right;
     Node* left;
     Node* parent;
 
     Node(key_type key, value_type value)
-        : key(key),
-          value(value),
-          right(nullptr),
-          left(nullptr),
-          parent(nullptr) {}
+        : data(key, value), right(nullptr), left(nullptr), parent(nullptr) {}
   };
   Node* head;
   size_t size_map;
@@ -46,6 +41,7 @@ class Map {
    public:
     friend class Map;
     iterator(Node* current) : current(current) {}
+    pair* operator->() { return &current->data; }
   };
 };
 
@@ -88,7 +84,7 @@ typename Map<Key, T>::iterator Map<Key, T>::insert(pair item) {
     Node* current = head;
     Node* parrent = nullptr;
     while (current) {
-      if (current->key > item.first) {
+      if (current->data.first > item.first) {
         parrent = current;
         current = current->left;
       } else {
@@ -96,7 +92,7 @@ typename Map<Key, T>::iterator Map<Key, T>::insert(pair item) {
         current = current->right;
       }
     }
-    if (parrent->key > item.first) {
+    if (parrent->data.first > item.first) {
       new_node->parent = parrent;
       parrent->left = new_node;
     } else {
